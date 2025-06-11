@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Time Tracking System</h1>
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="timesheet">Timesheet Entry</button>
+                <button class="tab-btn" data-tab="reports">Reports</button>
+                <button class="tab-btn" data-tab="wireframes">Wireframes</button>
+            </nav>
+        </header>
+
+        <!-- Timesheet Entry Tab -->
+        <div id="timesheet" class="tab-content active">
+            <div class="main-content">
+                <!-- Employee & Week Selection -->
+                <div class="card">
+                    <div class="card__body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employeeName" class="form-label">Employee Name</label>
+                                <input type="text" id="employeeName" class="form-control" value="John Smith">
+                            </div>
+                            <div class="form-group">
+                                <label for="weekSelect" class="form-label">Week Starting (Monday)</label>
+                                <input type="date" id="weekSelect" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Entry Form -->
+                <div class="card mt-16">
+                    <div class="card__header">
+                        <h3>Add Time Entry</h3>
+                    </div>
+                    <div class="card__body">
+                        <form id="timeEntryForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="daySelect" class="form-label">Day</label>
+                                    <select id="daySelect" class="form-control" required>
+                                        <option value="">Select Day</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="activitySelect" class="form-label">Activity</label>
+                                    <select id="activitySelect" class="form-control" required>
+                                        <option value="">Select Activity</option>
+                                        <option value="Project Design">Project Design</option>
+                                        <option value="Project Factory">Project Factory</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="R&D">R&D</option>
+                                        <option value="Vacation">Vacation</option>
+                                        <option value="Misc">Misc</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="specificItem" class="form-label">Specific Item</label>
+                                    <input type="text" id="specificItem" class="form-control" placeholder="Auto-filled based on activity">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="hours" class="form-label">Hours</label>
+                                    <input type="number" id="hours" class="form-control" step="0.1" min="0" max="24" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comments" class="form-label">Comments</label>
+                                <textarea id="comments" class="form-control" rows="3" placeholder="Additional notes..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary">Add Entry</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Daily Summary -->
+                <div class="card mt-16">
+                    <div class="card__body">
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Today's Total:</span>
+                                <span class="stat-value" id="dailyTotal">0.0 hrs</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Weekly Total:</span>
+                                <span class="stat-value" id="weeklyTotal">0.0 hrs</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Timesheet Status:</span>
+                                <span class="status status--info" id="timesheetStatus">Draft</span>
+                            </div>
+                        </div>
+                        <button id="submitTimesheet" class="btn btn--primary mt-16">Submit Timesheet</button>
+                    </div>
+                </div>
+
+                <!-- Weekly Entries -->
+                <div class="card mt-16">
+                    <div class="card__header">
+                        <h3>This Week's Entries</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="table-container">
+                            <table class="timesheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Activity</th>
+                                        <th>Specific Item</th>
+                                        <th>Hours</th>
+                                        <th>Comments</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="entriesTableBody">
+                                    <!-- Entries will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="card">
+                <div class="card__header">
+                    <h3>Time Tracking Reports</h3>
+                </div>
+                <div class="card__body">
+                    <!-- Filters -->
+                    <div class="filters-section">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="filterEmployee" class="form-label">Employee</label>
+                                <select id="filterEmployee" class="form-control">
+                                    <option value="">All Employees</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filterActivity" class="form-label">Activity</label>
+                                <select id="filterActivity" class="form-control">
+                                    <option value="">All Activities</option>
+                                    <option value="Project Design">Project Design</option>
+                                    <option value="Project Factory">Project Factory</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="R&D">R&D</option>
+                                    <option value="Vacation">Vacation</option>
+                                    <option value="Misc">Misc</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filterProject" class="form-label">Project/Quote</label>
+                                <input type="text" id="filterProject" class="form-control" placeholder="C-2567, Q#1234, etc.">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button id="applyFilters" class="btn btn--primary">Apply Filters</button>
+                            <button id="clearFilters" class="btn btn--secondary">Clear Filters</button>
+                            <button id="exportCSV" class="btn btn--outline">Export CSV</button>
+                        </div>
+                    </div>
+
+                    <!-- Summary by Activity -->
+                    <div class="reports-section mt-24">
+                        <h4>Summary by Activity</h4>
+                        <div class="activity-summary" id="activitySummary">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Detailed Reports -->
+                    <div class="reports-section mt-24">
+                        <h4>Detailed Timesheet Entries</h4>
+                        <div class="table-container">
+                            <table class="reports-table">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Week</th>
+                                        <th>Day</th>
+                                        <th>Activity</th>
+                                        <th>Specific Item</th>
+                                        <th>Hours</th>
+                                        <th>Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportsTableBody">
+                                    <!-- Reports will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wireframes Tab -->
+        <div id="wireframes" class="tab-content">
+            <div class="card">
+                <div class="card__header">
+                    <h3>Application Wireframes</h3>
+                </div>
+                <div class="card__body">
+                    <div class="wireframe-section">
+                        <h4>Weekly Timesheet Interface</h4>
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1749495276/gpt4o_images/y4g22fzpaqvauifptbci.png" alt="Time Tracking Application Wireframe - Weekly Timesheet Interface" class="wireframe-image">
+                    </div>
+                    <div class="wireframe-section mt-24">
+                        <h4>Reporting Dashboard Interface</h4>
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1749495328/gpt4o_images/u4g8x6pq7rvxmcu6g3mc.png" alt="Time Tracking Application Wireframe - Reporting Dashboard Interface" class="wireframe-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Another Entry?</h3>
+            <p>Would you like to add another entry for <span id="modalDay"></span>?</p>
+            <div class="modal-actions">
+                <button id="addAnotherBtn" class="btn btn--primary">Yes, Add Another</button>
+                <button id="doneBtn" class="btn btn--secondary">Done for Today</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
