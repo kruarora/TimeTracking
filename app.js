@@ -3,7 +3,7 @@
 class TimeTrackingApp {
     constructor() {
         this.currentWeek = '';
-        this.currentEmployee = 'John Smith';
+        this.currentEmployee = 'Gary Shaw';
         this.entries = [];
         this.timesheetStatus = 'Draft'; // Draft, Submitted, Locked
         this.currentDay = '';
@@ -33,7 +33,7 @@ class TimeTrackingApp {
         const sampleEntries = [
             {
                 id: 1,
-                employee: "John Smith",
+                employee: "Gary Shaw",
                 week: "2025-06-09",
                 day: "Monday",
                 activity: "Project Design",
@@ -43,7 +43,7 @@ class TimeTrackingApp {
             },
             {
                 id: 2,
-                employee: "John Smith", 
+                employee: "Gary Shaw", 
                 week: "2025-06-09",
                 day: "Monday",
                 activity: "Sales",
@@ -53,7 +53,7 @@ class TimeTrackingApp {
             },
             {
                 id: 3,
-                employee: "John Smith",
+                employee: "Gary Shaw",
                 week: "2025-06-09", 
                 day: "Tuesday",
                 activity: "Project Factory",
@@ -63,7 +63,7 @@ class TimeTrackingApp {
             },
             {
                 id: 4,
-                employee: "John Smith",
+                employee: "Gary Shaw",
                 week: "2025-06-09",
                 day: "Tuesday", 
                 activity: "R&D",
